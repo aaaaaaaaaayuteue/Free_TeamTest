@@ -31,6 +31,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // スペースキーが押されたら視点を切り替える
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // 現在の視点モードを反転して切り替える
+            SetTopDownMode(!isTopDown);
+        }
+
         if (isTopDown)
         {
             // ーーー2D俯瞰モードの移動処理ーーー
@@ -107,7 +114,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(move * GetCurrentSpeed() * Time.deltaTime);
     }
 
-    // 外部から視点モードを切り替える関数（ViewSwitchTriggerから呼ぶ）
+    // 外部から視点モードを切り替える関数
     // yRotation：3Dに戻る時のプレイヤーのY軸回転角度
     public void SetTopDownMode(bool topDown, float yRotation = 0f)
     {
@@ -127,7 +134,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // 3Dに戻る時、出た方向にプレイヤーを向かせる
+            // 3Dに戻る時、指定された方向にプレイヤーを向かせる
             transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
 
             // 上下の視点もリセットする
